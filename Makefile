@@ -5,6 +5,7 @@ build: build-builder
 	docker run -v ./src:/app c_compiler:latest
 	rm build/weather-bot -f
 	mv src/weather-bot build/weather-bot
+	cd src && make clean
 clean:
 	cd src && make clean
 	rm build -rf
