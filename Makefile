@@ -2,7 +2,7 @@ build-builder:
 	 docker build -f docker/build.Dockerfile . -t c_compiler:latest
 build: build-builder
 	mkdir -p ./build
-	docker run -v ./src:/app c_compiler:latest
+	docker run -v $(PWD)/src:/app c_compiler:latest
 	rm build/weather-bot -f
 	mv src/weather-bot build/weather-bot
 	cd src && make clean
