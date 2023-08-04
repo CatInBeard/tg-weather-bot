@@ -41,6 +41,43 @@ size_t char_buff_copy_cb(void *ptr, size_t size, size_t nmemb, mem_buff* mb){
 
 }
 
+char* escape_link(const char* link){
+    // alloc memory for escaped_link, to free use curl_free() insted of free()
+    CURL *curl = curl_easy_init();
+    if(curl){
+
+        char* escaped_link = curl_easy_escape(curl, link, strlen(link));
+        curl_easy_cleanup(curl);
+
+        return escaped_link;
+    }
+    return "\0";
+}
+
+bool simple_get(char* link){
+
+    CURL *curl = curl_easy_init();
+    if(curl){
+
+        CURLcode res;
+        curl_easy_setopt(curl, CURLOPT_URL, link);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, noop_cb);
+
+        res = curl_easy_perform(curl);
+
+
+        long http_code = 0;
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+
+        curl_easy_cleanup(curl);
+        
+        if(http_code >= 200 && http_code < 300 && res != CURLE_ABORTED_BY_CALLBACK){
+            return true;
+        }
+    } 
+    return false;
+}
+
 bool check_tg_token(const char* token){
 
     size_t token_length = 0;
@@ -57,24 +94,9 @@ bool check_tg_token(const char* token){
     strcpy(link_buffer+28,token); // 28 - link_buffer current length
     strcpy(link_buffer+28+token_length,"/getMe");
 
-    CURL *curl = curl_easy_init();
-    if(curl){
-        CURLcode res;
-        curl_easy_setopt(curl, CURLOPT_URL, link_buffer);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, noop_cb);
-
-        res = curl_easy_perform(curl);
-
-        long http_code = 0;
-        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
-
-        curl_easy_cleanup(curl);
-
-        if(http_code == 200 && res != CURLE_ABORTED_BY_CALLBACK){
-            return true;
-        }
-
-    } 
+    if(simple_get(link_buffer)){
+        return true;
+    }
 
     errno = 2;
     return false;
@@ -143,4 +165,42 @@ bool longpoll_get_updates(const char* token, mem_buff* result, const unsigned in
     
     return false;
 
+}
+
+bool send_simple_message_to_chat(const char* token, long chat_id, const char* message_text){
+
+    char* escaped_message_text = escape_link(message_text);
+
+    char int_buff[20];
+    
+    sprintf(int_buff, "%ld", chat_id);
+
+    size_t token_length = strlen(token);
+
+    size_t alloc_size = 145 + token_length + strlen(escaped_message_text); // 28 + 27 = 125
+                               // 28 - base url
+                               // 27 - get params
+                               // 70 - max token length
+                               // max long length
+
+
+    char* link_buffer = malloc(alloc_size);
+
+    strcpy(link_buffer, "https://api.telegram.org/bot");
+    
+    size_t buffer_pointer = 28;
+
+    strcpy(link_buffer + buffer_pointer, token);
+    buffer_pointer += token_length;
+    strcpy(link_buffer + buffer_pointer, "/sendMessage?chat_id=");
+    buffer_pointer += 21; // Prev text part length
+    strcpy(link_buffer + buffer_pointer, int_buff);
+    buffer_pointer += strlen(int_buff);
+    strcpy(link_buffer + buffer_pointer, "&text=");
+    buffer_pointer += 6; // Prev text part length
+    strcpy(link_buffer + buffer_pointer, escaped_message_text);
+    
+    curl_free(escaped_message_text);
+
+    return simple_get(link_buffer);
 }
