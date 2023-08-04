@@ -23,3 +23,13 @@ restart: build-server stop run
 
 rebuild-run: stop build-server run
 rebuild-run2: stop build-server run2
+
+debug: build-debugger run-debugger
+
+build-debugger:
+	docker build -f docker/gdb.Dockerfile . -t c_debugger:latest
+
+run-debugger:
+	docker stop tg_weather_bot_debugger || true
+	docker rm tg_weather_bot_debugger || true
+	docker run -it --env-file=debug.env --name tg_weather_bot_debugger c_debugger:latest
