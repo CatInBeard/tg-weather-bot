@@ -7,8 +7,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "tg_functions.h"
+#include "mem_buff.h"
 
 int main(int argc, char* argv[]){
 
@@ -33,6 +35,19 @@ int main(int argc, char* argv[]){
        printf("Telegram token valid!\n");
    }
 
+   mem_buff mb;
+   mb.buffer = malloc(1);
+   mb.size = 1;
+
+
+   simple_longpoll_get_updates(TG_TOKEN, &mb, 0); 
+
+   printf("%s", mb.buffer); 
+
+   free(mb.buffer);
+   mb.size = 0;
+
+   return 0;
 
    printf("Bot is started...\n");
 
