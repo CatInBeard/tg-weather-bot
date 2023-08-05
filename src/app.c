@@ -70,7 +70,8 @@ bool parse_new_messages(mem_buff *mb, tg_text_message* message){
     message->chat_id = chat_id; 
 
     json_object_put(root);
-
+    
+    return true;
 }
 
 bool answer_new_message(const char* TG_TOKEN){

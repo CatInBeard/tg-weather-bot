@@ -16,7 +16,7 @@
 #include "curl_functions.h"
 
 
-size_t noop_cb(void *ptr, size_t size, size_t nmemb, void *data) {
+size_t noop_cb(void *ptr __attribute__((unused)), size_t size, size_t nmemb, void *data __attribute__((unused))) {
   return size * nmemb;
 }
 
@@ -101,6 +101,6 @@ bool get_with_responce(const char* link, mem_buff* mb, const unsigned int curl_t
 
     } 
 
-
+    return false;
 
 }

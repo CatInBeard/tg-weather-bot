@@ -3,6 +3,7 @@ bin_name = weather-bot
 include_dirs = -Iheaders -Iheaders/structs
 link_libs = -lcurl -ljson-c
 objects = main.o tg_functions.o curl_functions.o app.o
+flags = -Wall -Wextra
 
 DEBUG?=0
 
@@ -21,16 +22,16 @@ exec:
 	chmod +x $(bin_name)
 
 build: $(objects)
-	gcc $(objects) $(DEBUG_FLAGS) -o $(bin_name) $(include_dirs) $(link_libs) 
+	gcc $(objects) $(DEBUG_FLAGS) -o $(bin_name) $(include_dirs) $(link_libs) $(flags)
 	
 main.o:
-	gcc -c main.c $(include_dirs) $(DEBUG_FLAGS) 
+	gcc -c main.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 tg_functions.o:
-	gcc -c tg_functions.c $(include_dirs) $(DEBUG_FLAGS) 
+	gcc -c tg_functions.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 curl_functions.o:
-	gcc -c curl_functions.c $(include_dirs) $(DEBUG_FLAGS) 
+	gcc -c curl_functions.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 app.o:
-	gcc -c app.c $(include_dirs) $(DEBUG_FLAGS) 
+	gcc -c app.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 
 install:
 	cp $(bin_name) /usr/bin/$(bin_name)

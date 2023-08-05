@@ -13,11 +13,11 @@
 #include "app.h"
 #include "mem_buff.h"
 
-int main(int argc, char* argv[]){
+int main(){
 
 
    const char *TG_TOKEN = getenv("TG_TOKEN");
-   const char *OW_TOKEN = getenv("OW_TOKEN");
+   const char *OW_TOKEN __attribute__((unused)) = getenv("OW_TOKEN");
 
 
    if(!TG_TOKEN){
