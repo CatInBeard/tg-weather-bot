@@ -32,4 +32,4 @@ build-debugger:
 run-debugger:
 	docker stop tg_weather_bot_debugger || true
 	docker rm tg_weather_bot_debugger || true
-	docker run -it --env-file=debug.env --name tg_weather_bot_debugger c_debugger:latest
+	docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it --env-file=debug.env --name tg_weather_bot_debugger c_debugger:latest
