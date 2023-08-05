@@ -1,5 +1,14 @@
+TAG?=latest
+ENV_TAG=$(SOURCE_TAG)
+DOCKER_REPOSITORY?=
+
+ifneq ($(ENV_TAG),) 
+    TAG=$(ENV_TAG)
+endif
+
+
 build-builder:
-	 docker build -f docker/build.Dockerfile . -t c_compiler:latest
+	docker build -f docker/build.Dockerfile . -t c_compiler:latest
 build: build-builder
 	mkdir -p ./build
 	docker run -v $(PWD)/src:/app c_compiler:latest
@@ -10,7 +19,7 @@ clean:
 	cd src && make clean
 	rm build -rf
 build-server: build
-	docker build -f docker/server.Dockerfile . -t tg_weather_bot:latest
+	docker build -f docker/server.Dockerfile . -t tg_weather_bot:$(TAG)
 run:
 	docker run --env-file=.env --name tg_weather_bot -d tg_weather_bot:latest
 run2:
@@ -20,6 +29,11 @@ stop:
 	docker rm tg_weather_bot || true
 restart: build-server stop run
 
+publish: build-server
+	docker tag tg_weather_bot:$(TAG) $(DOCKER_REPOSITORY):$(TAG)
+	docker push $(DOCKER_REPOSITORY):$(TAG)
+	docker tag tg_weather_bot:$(TAG) $(DOCKER_REPOSITORY):latest
+	docker push $(DOCKER_REPOSITORY):latest
 
 rebuild-run: stop build-server run
 rebuild-run2: stop build-server run2
