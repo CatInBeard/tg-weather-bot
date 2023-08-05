@@ -1,8 +1,8 @@
 bin_name = weather-bot
 
 include_dirs = -Iheaders -Iheaders/structs
-link_libs = -lcurl
-objects = main.o tg_functions.o curl_functions.o
+link_libs = -lcurl -ljson-c
+objects = main.o tg_functions.o curl_functions.o app.o
 
 DEBUG?=0
 
@@ -29,6 +29,9 @@ tg_functions.o:
 	gcc -c tg_functions.c $(include_dirs) $(DEBUG_FLAGS) 
 curl_functions.o:
 	gcc -c curl_functions.c $(include_dirs) $(DEBUG_FLAGS) 
+app.o:
+	gcc -c app.c $(include_dirs) $(DEBUG_FLAGS) 
+
 install:
 	cp $(bin_name) /usr/bin/$(bin_name)
 clean:
