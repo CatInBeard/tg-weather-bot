@@ -69,7 +69,7 @@ Alternatively, you can do without a container builder and work without a server 
 4. Install:
    ```make install```
 5. Run: ``` tg-weather-bot``` or ```nohup tg-weather-bot >/dev/null 2>&1 &``` for background usage
-6. Cron (optional) You can add cornjob after system startup:
+6. Cron (optional) You can add cronjob after system startup:
    open crontab with ```crontab -e``` and add ``` @reboot nohup tg-weather-bot >/dev/null 2>&1 &```
 
 ## Debug
