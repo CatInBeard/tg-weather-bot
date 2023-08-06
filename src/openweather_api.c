@@ -194,13 +194,9 @@ bool get_weather_by_city(const char* OW_TOKEN, const char* city, city_weather* c
     mb.size = 1;
 
 
-
     if(!get_with_responce(link_buffer, &mb, 30)){
         return false;
     }
-
-    printf("\n\n%s\n\n", mb.buffer);
-
     parse_raw_weather_to_city_weather(&mb,cw);
 
     free(mb.buffer);
