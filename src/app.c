@@ -13,6 +13,7 @@
 
 #include "tg_functions.h"
 #include "mem_buff.h"
+#include "text.h"
 
 extern long TG_OFFSET;
 
@@ -26,7 +27,23 @@ bool answer_new_message(const char* TG_TOKEN){
     
     TG_OFFSET = msg.offset+1;
 
-    send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msg.text);
+    if(strlen(msg.text) >= 6){ // 6 - "/start" length
+        
+        char buff[7];
+        memcpy(buff, msg.text, 6);
+        buff[6] = '\0';
+
+        if(strcmp(buff, "/start") == 0){
+
+            send_simple_message_to_chat(TG_TOKEN, msg.chat_id , get_greeting()); 
+            free(msg.text);
+            return true;
+
+        }        
+
+    }
+
+    send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msg.text); 
 
     free(msg.text);
     
