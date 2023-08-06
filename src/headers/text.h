@@ -1,6 +1,8 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-char* get_greeting();
+#include "city_weather.h"
 
+char* get_greeting();
+char* format_current_weather_message(const city_weather* cw);
 #endif

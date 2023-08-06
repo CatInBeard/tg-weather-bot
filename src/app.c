@@ -14,10 +14,11 @@
 #include "tg_functions.h"
 #include "mem_buff.h"
 #include "text.h"
+#include "openweather_api.h"
 
 extern long TG_OFFSET;
 
-bool answer_new_message(const char* TG_TOKEN){
+bool answer_new_message(const char* TG_TOKEN, const char* OW_TOKEN){
     
     tg_text_message msg;
 
@@ -43,7 +44,25 @@ bool answer_new_message(const char* TG_TOKEN){
 
     }
 
-    send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msg.text); 
+    city_weather cw;
+
+    if(get_weather_by_city(OW_TOKEN, msg.text, &cw)){   
+
+        char* msgbuff = format_current_weather_message(&cw); 
+
+        send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msgbuff); 
+
+
+    }
+    else{
+
+        send_simple_message_to_chat(TG_TOKEN, msg.chat_id , "City not found!"); 
+
+    }
+
+
+
+    //send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msg.text); 
 
     free(msg.text);
     
@@ -51,10 +70,10 @@ bool answer_new_message(const char* TG_TOKEN){
 }
 
 
-void app_run(const char* TG_TOKEN){
+void app_run(const char* TG_TOKEN, const char* OW_TOKEN){
 
     for(;;){
-        answer_new_message(TG_TOKEN);
+        answer_new_message(TG_TOKEN, OW_TOKEN);
         printf("Current offset: %ld\n", TG_OFFSET);
     }
 }
