@@ -1,4 +1,4 @@
-# tg_weather_bot
+# tg-weather-bot
 
 Simple tg weather bot written in C  
 
@@ -12,7 +12,7 @@ This project is licensed under the terms of the MIT License. See the [LICENSE](L
 
 ## Installation
 
-To get started with tg_weather_bot, follow these steps:
+To get started with tg-weather-bot, follow these steps:
 
 1. Clone the repository:
 
@@ -34,19 +34,19 @@ To get started with tg_weather_bot, follow these steps:
 
 ## Docker Hub
 
-You can run tg_weather_bot using Docker Hub. Follow these steps:
+You can run tg-weather-bot using Docker Hub. Follow these steps:
 
 1. Pull the Docker image from Docker Hub:
 
    
-   ```docker pull catinbeard/tg_weather_bot:latest```
+   ```docker pull catinbeard/tg-weather-bot:latest```
    
 2. Run the container:
 
    
-```docker run -d catinbeard/tg_weather_bot:latest -e TG_TOKEN='YOUR_BOT_TOKEN'```
+```docker run -d catinbeard/tg-weather-bot:latest -e TG_TOKEN='YOUR_BOT_TOKEN' -e OW_TOKEN='YOUR_OW_TOKEN'```
 
-   The tg_weather_bot will can  now be running inside the Docker container.
+   The tg-weather-bot will can  now be running inside the Docker container.
    
 ## Building without Docker 
 Alternatively, you can do without a container builder and work without a server container. Follow these steps:
