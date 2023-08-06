@@ -55,7 +55,7 @@ char* format_current_weather_message(const city_weather* cw){
    cw_get_text_weather_type(cw->weather, wt);
 
 
-   sprintf(message,"Currently, it is %s outside.\nThe temperature is %d°C,\n but it feels like %d°C.\nThe air pressure is %d mmHg.\n The humidity level is %d%%.\n The wind is blowing at a speed of %d m/s.\n The cloudiness is %d%%\n",
+   sprintf(message,"Currently, it is %s outside.\n🌡️The temperature is %d°C, but it feels like %d°C.\n⏱️The air pressure is %d mmHg.\n💦The humidity level is %d%%.\n💨The wind is blowing at a speed of %d m/s.\n☁️The cloudiness is %d%%\n",
           wt, (int) kelvin_to_celsius(cw->temp_kelvin), (int) kelvin_to_celsius(cw->temp_feels_kelvin), (int) hpa_to_mmhg(cw->pressure_hpa), cw->humidity_percent, (int) cw->wind_speed_mps, cw->cloudiness_percent
           );
 
