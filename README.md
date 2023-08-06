@@ -4,7 +4,7 @@ Simple tg weather bot written in C
 
 ## Description
 
-Simple tg weather bot written in C  
+To get the weather information for a specific city, write to the bot https://t.me/weather_sub_bot with the name of the city you want to know the weather for. The bot will provide you with the weather condition, temperature, humidity, pressure, and wind speed in that location. The bot utilizes the OpenWeather API to fetch the weather data. Bot written in C, wrapped in docker container.
 
 ## License
 
