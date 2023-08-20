@@ -6,4 +6,4 @@ WORKDIR /app
 
 COPY build/weather-bot /usr/bin/weather-bot
 
-ENTRYPOINT weather-bot
+ENTRYPOINT ["weather-bot", "--logfile", "/app/app.log"]

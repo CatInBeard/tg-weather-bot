@@ -6,7 +6,7 @@
 #include "mem_buff.h"
 #include "tg_text_message.h"
 
-
+extern long TG_OFFSET;
 bool check_tg_token(const char*);
 bool longpoll_get_updates(const char* token, mem_buff* result, const unsigned int timeout, const unsigned int curl_timeout, const unsigned int events_limit, const unsigned long offset);
 bool simple_longpoll_get_updates(const char* token, mem_buff* result, const unsigned long offset);

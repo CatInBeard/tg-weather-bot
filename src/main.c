@@ -7,15 +7,48 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
+#include <fcntl.h>
 
 #include "openweather_api.h"
+#include "logger.h"
 #include "tg_functions.h"
 #include "app.h"
 #include "mem_buff.h"
 
-int main(){
+int main(int argc, char* argv[]){
 
+   bool enableLogging = true;
+   FILE* logfile_fd = NULL;
+
+   for(int i = 1 ; i < argc; i++){ // Skip program name
+       if(strcmp("--nolog",argv[i]) == 0){
+           enableLogging = false;
+       }
+       else if(strcmp("--logfile",argv[i]) == 0){
+           if(i >= argc - 1){
+               fprintf(stderr, "logfile not set");
+               return 3;
+           }
+           else{
+               logfile_fd = fopen(argv[i+1], "a+");
+               if(logfile_fd == NULL){
+                   fprintf(stderr, "Cant write to \"%s\" file",argv[i+1]);
+                   return 3;
+               }
+           }
+       }
+   }
+
+   if(enableLogging && logfile_fd == NULL){
+       logfile_fd = fopen("app.log", "a+");
+        if(logfile_fd == NULL){
+            fprintf(stderr, "Cant write to \"app.log\" file");
+            return 3;
+        }
+   }
+   LOGFILE_FD = logfile_fd;
 
    const char *TG_TOKEN = getenv("TG_TOKEN");
    const char *OW_TOKEN = getenv("OW_TOKEN");
@@ -52,6 +85,8 @@ int main(){
    printf("Openweather token valid!\n");
 
    printf("Bot is started...\n");
+
+   write_log("Bot is started");
 
    app_run(TG_TOKEN, OW_TOKEN);
 
