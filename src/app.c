@@ -58,7 +58,7 @@ bool answer_new_message(const char* TG_TOKEN, const char* OW_TOKEN){
 
         send_simple_message_to_chat(TG_TOKEN, msg.chat_id , msgbuff); 
 
-
+	free(msgbuff);
     }
     else{
 
