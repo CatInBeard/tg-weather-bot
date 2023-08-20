@@ -2,7 +2,7 @@ bin_name = weather-bot
 
 include_dirs = -Iheaders -Iheaders/structs
 link_libs = -lcurl -ljson-c
-objects = main.o tg_functions.o curl_functions.o app.o text.o openweather_api.o weather_converter.o
+objects = main.o tg_functions.o curl_functions.o app.o text.o openweather_api.o weather_converter.o logger.o
 flags = -Wall -Wextra
 
 DEBUG?=0
@@ -38,6 +38,8 @@ openweather_api.o:
 	gcc -c openweather_api.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 weather_converter.o:
 	gcc -c weather_converter.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
+logger.o:
+	gcc -c logger.c $(include_dirs) $(DEBUG_FLAGS) $(flags)
 
 
 install:

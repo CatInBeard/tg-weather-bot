@@ -15,8 +15,7 @@
 #include "mem_buff.h"
 #include "text.h"
 #include "openweather_api.h"
-
-extern long TG_OFFSET;
+#include "logger.h"
 
 bool answer_new_message(const char* TG_TOKEN, const char* OW_TOKEN){
     
@@ -27,6 +26,13 @@ bool answer_new_message(const char* TG_TOKEN, const char* OW_TOKEN){
     }
     
     TG_OFFSET = msg.offset+1;
+
+    if(LOGFILE_FD != NULL){
+        char buffer [50];
+        sprintf(buffer, "New message from chat_id %ld, offset %ld", msg.chat_id, TG_OFFSET);
+        write_log(buffer);
+        
+    }
 
     if(strlen(msg.text) >= 6){ // 6 - "/start" length
         
@@ -76,5 +82,6 @@ void app_run(const char* TG_TOKEN, const char* OW_TOKEN){
         answer_new_message(TG_TOKEN, OW_TOKEN);
         printf("Current offset: %ld\n", TG_OFFSET);
     }
+
 }
 
