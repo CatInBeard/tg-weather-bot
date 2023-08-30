@@ -3,6 +3,6 @@
 
 #include "city_weather.h"
 
-char* get_greeting();
-char* format_current_weather_message(const city_weather* cw);
+char *get_greeting();
+char *format_current_weather_message(const city_weather *cw);
 #endif

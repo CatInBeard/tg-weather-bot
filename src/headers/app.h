@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void app_run(const char* TG_TOKEN, const char* OW_TOKEN);
+void app_run(const char *TG_TOKEN, const char *OW_TOKEN);
 
 #endif

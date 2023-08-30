@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-extern FILE* LOGFILE_FD;
+extern FILE *LOGFILE_FD;
 
-void write_log(const char* error_text);
+void write_log(const char *error_text);
 
 #endif

@@ -5,8 +5,8 @@
 
 #include "city_weather.h"
 
-bool check_openweather_token(const char* token);
-bool get_weather_by_city(const char* OW_TOKEN, const char* city, city_weather* cw);
-
+bool check_openweather_token(const char *token);
+bool get_weather_by_city(const char *OW_TOKEN, const char *city,
+                         city_weather *cw);
 
 #endif
