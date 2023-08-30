@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <unistd.h>
+#include <signal.h>
 #include <fcntl.h>
 
 #include "openweather_api.h"
@@ -18,6 +20,17 @@
 #include "mem_buff.h"
 
 int main(int argc, char* argv[]){
+
+   if (signal(SIGCHLD, SIG_IGN) == SIG_ERR) {
+        perror("signal");
+        exit(EXIT_FAILURE);
+   }
+   /*
+    * Ignore SIGCHLD, for optimization
+    * 
+    * https://www.man7.org/linux/man-pages/man2/fork.2.html 
+   */
+
 
    bool enableLogging = true;
    FILE* logfile_fd = NULL;
