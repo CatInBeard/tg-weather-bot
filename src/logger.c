@@ -25,5 +25,6 @@ void write_log(const char *error_text) {
     get_current_datetime(datebuffer);
 
     fprintf(LOGFILE_FD, "[%s]: %s\n", datebuffer, error_text);
+    fflush(LOGFILE_FD);
   }
 }
