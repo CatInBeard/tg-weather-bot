@@ -30,8 +30,8 @@ void proccess_new_message(tg_text_message *msg, const char *TG_TOKEN,
     if (strcmp(buff, "/start") == 0) {
 
       send_simple_message_to_chat(TG_TOKEN, msg->chat_id, get_greeting());
-      free(msg->text);
-      return true;
+      
+      exit(0);
     }
   }
 
