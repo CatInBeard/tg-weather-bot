@@ -19,11 +19,12 @@ clean:
 	cd src && make clean
 	rm build -rf
 build-server: build
+	mkdir -p data
 	docker build -f docker/server.Dockerfile . -t tg_weather_bot:$(TAG)
 run:
-	docker run --env-file=.env --name tg_weather_bot -d tg_weather_bot:latest
+	docker run --env-file=.env -v $(PWD)/data:/app --name tg_weather_bot -d tg_weather_bot:latest
 run2:
-	docker run --env-file=.env --name tg_weather_bot tg_weather_bot:latest 
+	docker run --env-file=.env -v $(PWD)/data:/app --name tg_weather_bot tg_weather_bot:latest 
 stop:
 	docker stop tg_weather_bot || true
 	docker rm tg_weather_bot || true
@@ -40,10 +41,21 @@ rebuild-run2: stop build-server run2
 
 debug: build-debugger run-debugger
 
+profile: build-profiler run-profiler
+
 build-debugger:
 	docker build -f docker/gdb.Dockerfile . -t c_debugger:latest
+
+build-profiler:
+	docker build -f docker/gprof.Dockerfile . -t c_profiler:latest	
 
 run-debugger:
 	docker stop tg_weather_bot_debugger || true
 	docker rm tg_weather_bot_debugger || true
 	docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it --env-file=debug.env --name tg_weather_bot_debugger c_debugger:latest
+
+run-profiler:
+	mkdir -p profiler
+	docker stop tg_weather_bot_profiler || true
+	docker rm tg_weather_bot_profiler || true
+	docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it -v $(PWD)/profiler:/app/data --env-file=debug.env --name tg_weather_bot_profiler c_profiler:latest

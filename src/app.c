@@ -82,7 +82,21 @@ bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
 
 void app_run(const char *TG_TOKEN, const char *OW_TOKEN) {
 
+  // Required for profiling, need correct exit
+  #ifdef ITERATOR_LIMIT_COUNT
+    long iter = 0;
+  #endif
+
   for (;;) {
+    
+    #ifdef ITERATOR_LIMIT_COUNT
+    iter++;
+    printf("Iteration count:%ld\n", iter);
+    if(iter >= ITERATOR_LIMIT_COUNT){
+      exit(0);
+    }
+    #endif
+
     answer_new_message(TG_TOKEN, OW_TOKEN);
     printf("Current offset: %ld\n", TG_OFFSET);
   }
