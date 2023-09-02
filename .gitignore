@@ -1,4 +1,6 @@
 *.o
 build/
 *.env
+*.log
+profiler
 !example.env
