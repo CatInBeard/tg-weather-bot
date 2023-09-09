@@ -43,11 +43,16 @@ debug: build-debugger run-debugger
 
 profile: build-profiler run-profiler
 
+valgrind: build-valgrind run-valgrind
+
 build-debugger:
 	docker build -f docker/gdb.Dockerfile . -t c_debugger:latest
 
 build-profiler:
-	docker build -f docker/gprof.Dockerfile . -t c_profiler:latest	
+	docker build -f docker/gprof.Dockerfile . -t c_profiler:latest
+
+build-valgrind:
+	docker build -f docker/valgrind.Dockerfile . -t c_valgrind:latest	
 
 run-debugger:
 	docker stop tg_weather_bot_debugger || true
@@ -58,4 +63,10 @@ run-profiler:
 	mkdir -p profiler
 	docker stop tg_weather_bot_profiler || true
 	docker rm tg_weather_bot_profiler || true
-	docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it -v $(PWD)/profiler:/app/data --env-file=debug.env --name tg_weather_bot_profiler c_profiler:latest
+	docker run --cap-add=SYS_PTRACE -it --security-opt seccomp=unconfined -v $(PWD)/profiler:/app/data --env-file=debug.env --name tg_weather_bot_profiler c_profiler:latest
+
+run-valgrind:
+	mkdir -p valgrind
+	docker stop tg_weather_bot_valgrind || true
+	docker rm tg_weather_bot_valgrind || true
+	docker run --ulimit nofile=262144:262144 --cap-add=SYS_PTRACE -it --security-opt seccomp=unconfined -v $(PWD)/valgrind:/app/data --env-file=debug.env --name tg_weather_bot_valgrind c_valgrind:latest

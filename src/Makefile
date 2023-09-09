@@ -7,6 +7,7 @@ flags = -Wall -Wextra
 
 DEBUG?=0
 PROFILE?=0
+ITERLIMIT?=0
 
 ifneq ($(DEBUG), 0)
 	DEBUG_FLAGS = -g
@@ -18,6 +19,10 @@ ifneq ($(PROFILE), 0)
 	PROFILER_FLAGS = -pg -g -p -DITERATOR_LIMIT_COUNT=10 -fno-omit-frame-pointer -fno-inline-functions -fno-inline
 else
 	PROFILER_FLAGS = 
+endif
+
+ifneq ($(ITERLIMIT), 0)
+	PROFILER_FLAGS = -DITERATOR_LIMIT_COUNT=$(ITERLIMIT)
 endif
 
 all: build strip exec
