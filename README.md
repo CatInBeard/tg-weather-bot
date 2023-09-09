@@ -19,15 +19,15 @@ To get started with tg-weather-bot, follow these steps:
   ```git clone https://github.com/CatInBeard/tg-weather-bot.git```
    
 
-2. Obtain a Telegram Bot API token and set it in the .env file by copying the exmaple.env file and fill variables. You can create a bot and obtain the token by following the instructions provided by [BotFather](https://telegram.me/BotFather).
+2. Obtain a Telegram Bot API token and set it in the .env file by copying the exmaple.env file and fill TG_TOKEN variable. You can create a bot and obtain the token by following the instructions provided by [BotFather](https://telegram.me/BotFather).
 
-3. Build container:
-   
+2. Obtain openweather API token and set it in the .env file by copying the exmaple.env file and fill OW_TOKEN variable. You can obtain the token by following the instructions provided by [BotFather](https://openweathermap.org/appid).
+
+3. Build container:  
 ```make build-server```
 
 4. Start bot:
 
-   
 ```make run```
    
    The bot should now be up and running.
@@ -44,9 +44,9 @@ You can run tg-weather-bot using Docker Hub. Follow these steps:
 2. Run the container:
 
    
-```docker run -d catinbeard/tg-weather-bot:latest -e TG_TOKEN='YOUR_BOT_TOKEN' -e OW_TOKEN='YOUR_OW_TOKEN'```
+```docker run -d -v $PWD/data:/app  catinbeard/tg-weather-bot:latest -e TG_TOKEN='YOUR_BOT_TOKEN' -e OW_TOKEN='YOUR_OW_TOKEN'```
 
-   The tg-weather-bot will can  now be running inside the Docker container.
+   The tg-weather-bot will can now be running inside the Docker container.
    
 ## Building without Docker 
 Alternatively, you can do without a container builder and work without a server container. Follow these steps:
@@ -73,8 +73,16 @@ Alternatively, you can do without a container builder and work without a server 
    open crontab with ```crontab -e``` and add ``` @reboot nohup tg-weather-bot >/dev/null 2>&1 &```
 
 ## Debug
-You can build the debug version and open it with gdb: 
+You can build the debug version and open it with gdb:  
+```make debug```  
+If you are not using Docker and simply want to build the debug version, go to the src directory and run:  
+```make build DEBUG=1```
 
-  ```make debug```.
-  
-  If you are not using Docker and simply want to build the debug version, go to the src directory and run ```make build DEBUG=1```.
+## Profiling
+You can build the debug version and run it with gprof:  
+```make profile```  
+If you are not using Docker and simply want to build the profiling version, go to the src directory and run:  
+```make build PROFILE=1```
+## Valgrind
+You can generate valgrind report with:  
+```make valgrind```
