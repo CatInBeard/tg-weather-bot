@@ -4,3 +4,5 @@ build/
 *.log
 profiler
 !example.env
+valgrind/valgrind-out.txt
+src/weather-bot
