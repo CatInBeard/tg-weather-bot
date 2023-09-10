@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
   bool enableLogging = true;
   FILE *logfile_fd = NULL;
 
+  bool needTokenCheck = true;
+
   for (int i = 1; i < argc; i++) { // Skip program name
     if (strcmp("--nolog", argv[i]) == 0) {
       enableLogging = false;
@@ -48,6 +50,8 @@ int main(int argc, char *argv[]) {
           return 3;
         }
       }
+    } else if (strcmp("--skipcheck", argv[i]) == 0) {
+      needTokenCheck = false;
     }
   }
 
@@ -70,14 +74,18 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  printf("Checking telegram bot token...\n");
+  if (needTokenCheck) {
+    printf("Checking telegram bot token...\n");
 
-  if (!check_tg_token(TG_TOKEN)) {
-    fprintf(stderr, "Invalid telegram token\n");
+    if (!check_tg_token(TG_TOKEN)) {
+      fprintf(stderr, "Invalid telegram token\n");
 
-    return 1;
+      return 1;
+    } else {
+      printf("Telegram token valid!\n");
+    }
   } else {
-    printf("Telegram token valid!\n");
+    printf("Telegram token check skipped...\n");
   }
 
   if (!OW_TOKEN) {
@@ -87,14 +95,18 @@ int main(int argc, char *argv[]) {
     return 2;
   }
 
-  printf("Checking OpenWeather token...\n");
+  if (needTokenCheck) {
+    printf("Checking OpenWeather token...\n");
 
-  if (!check_openweather_token(OW_TOKEN)) {
-    fprintf(stderr, "OpenWeather token invalid!\n");
-    return 2;
+    if (!check_openweather_token(OW_TOKEN)) {
+      fprintf(stderr, "OpenWeather token invalid!\n");
+      return 2;
+    }
+
+    printf("Openweather token valid!\n");
+  } else {
+    printf("Openweather  tokek check skipped...\n");
   }
-
-  printf("Openweather token valid!\n");
 
   printf("Bot is started...\n");
 
