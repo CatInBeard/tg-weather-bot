@@ -4,7 +4,7 @@ Simple tg weather bot written in C
 
 ## Description
 
-To get the weather information for a specific city, write to the bot https://t.me/weather_sub_bot with the name of the city you want to know the weather for. The bot will provide you with the weather condition, temperature, humidity, pressure, and wind speed in that location. The bot utilizes the OpenWeather API to fetch the weather data. Bot written in C, wrapped in docker container.
+To get the weather information for a specific city, write to the [bot](https://t.me/weather_sub_bot) with the name of the city you want to know the weather for. The bot will provide you with the weather condition, temperature, humidity, pressure, and wind speed in that location. The bot utilizes the OpenWeather API to fetch the weather data. Bot written in C, wrapped in docker container.
 
 ## License
 
@@ -21,7 +21,7 @@ To get started with tg-weather-bot, follow these steps:
 
 2. Obtain a Telegram Bot API token and set it in the .env file by copying the exmaple.env file and fill TG_TOKEN variable. You can create a bot and obtain the token by following the instructions provided by [BotFather](https://telegram.me/BotFather).
 
-2. Obtain openweather API token and set it in the .env file by copying the exmaple.env file and fill OW_TOKEN variable. You can obtain the token by following the instructions provided by [BotFather](https://openweathermap.org/appid).
+2. Obtain openweather API token and set it in the .env file by copying the exmaple.env file and fill OW_TOKEN variable. You can obtain the token by following the instructions provided by [openweather](https://openweathermap.org/appid).
 
 3. Build container:  
 ```make build-server```
