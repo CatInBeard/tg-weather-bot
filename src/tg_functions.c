@@ -8,6 +8,7 @@
 #include <curl/curl.h>
 #include <errno.h>
 #include <json-c/json.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -110,12 +111,15 @@ bool parse_new_messages(mem_buff *mb, tg_text_message *message) {
     return false;
   }
 
+  struct json_object *update_id_obj;
+  find = json_object_object_get_ex(result_element, "update_id", &update_id_obj);
+  JSON_FIND_HELPER
+  long offset = json_object_get_int64(update_id_obj);
+  message->offset = offset;
+
   struct json_object *message_obj;
   find = json_object_object_get_ex(result_element, "message", &message_obj);
   JSON_FIND_HELPER
-  struct json_object *message_text_obj;
-  json_object_object_get_ex(message_obj, "text", &message_text_obj);
-  const char *message_text = json_object_get_string(message_text_obj);
 
   struct json_object *chat_obj;
   find = json_object_object_get_ex(message_obj, "chat", &chat_obj);
@@ -124,17 +128,17 @@ bool parse_new_messages(mem_buff *mb, tg_text_message *message) {
   find = json_object_object_get_ex(chat_obj, "id", &chat_id_obj);
   JSON_FIND_HELPER
 
+  struct json_object *message_text_obj;
+  find = json_object_object_get_ex(message_obj, "text", &message_text_obj);
+  JSON_FIND_HELPER
+  const char *message_text = json_object_get_string(message_text_obj);
+
+
   long chat_id = json_object_get_int(chat_id_obj);
 
-  struct json_object *update_id_obj;
-  find = json_object_object_get_ex(result_element, "update_id", &update_id_obj);
-  JSON_FIND_HELPER
-
-  long offset = json_object_get_int64(update_id_obj);
 
   message->text = malloc(strlen(message_text));
   strcpy(message->text, message_text);
-  message->offset = offset;
   message->chat_id = chat_id;
 
   json_object_put(root);
@@ -158,3 +162,4 @@ bool get_new_text_message(const char *TG_TOKEN, tg_text_message *msg) {
 
   return parsed;
 }
+

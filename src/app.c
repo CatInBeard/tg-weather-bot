@@ -56,8 +56,17 @@ void proccess_new_message(tg_text_message *msg, const char *TG_TOKEN,
 bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
 
   tg_text_message msg;
+  msg.offset=0;
 
   if (!get_new_text_message(TG_TOKEN, &msg)) {
+    if(msg.offset!=0){
+      TG_OFFSET = msg.offset + 1;
+      pid_t pid = fork();
+      if (pid == 0) {
+        send_simple_message_to_chat(TG_TOKEN, msg.chat_id, get_not_understand_message()); // Subroutine
+        exit(0);
+      }
+    }
     return false;
   }
 

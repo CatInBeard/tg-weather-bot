@@ -1,0 +1,53 @@
+{
+    "ok": true,
+    "result": [
+        {
+            "update_id": 814879298,
+            "message": {
+                "message_id": 611,
+                "from": {
+                    "id": 225646944,
+                    "is_bot": false,
+                    "first_name": "\u0413\u0440\u0438\u0433\u043e\u0440\u0438\u0439",
+                    "last_name": "\u0415\u0444\u0438\u043c\u043e\u0432",
+                    "username": "efimov_gm",
+                    "language_code": "en"
+                },
+                "chat": {
+                    "id": 225646944,
+                    "first_name": "\u0413\u0440\u0438\u0433\u043e\u0440\u0438\u0439",
+                    "last_name": "\u0415\u0444\u0438\u043c\u043e\u0432",
+                    "username": "efimov_gm",
+                    "type": "private"
+                },
+                "date": 1694292507,
+                "sticker": {
+                    "width": 512,
+                    "height": 512,
+                    "emoji": "\ud83d\ude09",
+                    "set_name": "shlya_2",
+                    "is_animated": false,
+                    "is_video": false,
+                    "type": "regular",
+                    "thumbnail": {
+                        "file_id": "AAMCAgADGQEAAgJjZPzaG_xL86732scO5O8p0dCAPcQAAqgnAALpVQUYzED4Nb5jfxcBAAdtAAMwBA",
+                        "file_unique_id": "AQADqCcAAulVBRhy",
+                        "file_size": 16620,
+                        "width": 320,
+                        "height": 320
+                    },
+                    "thumb": {
+                        "file_id": "AAMCAgADGQEAAgJjZPzaG_xL86732scO5O8p0dCAPcQAAqgnAALpVQUYzED4Nb5jfxcBAAdtAAMwBA",
+                        "file_unique_id": "AQADqCcAAulVBRhy",
+                        "file_size": 16620,
+                        "width": 320,
+                        "height": 320
+                    },
+                    "file_id": "CAACAgIAAxkBAAICY2T82hv8S_Ou99rHDuTvKdHQgD3EAAKoJwAC6VUFGMxA-DW-Y38XMAQ",
+                    "file_unique_id": "AgADqCcAAulVBRg",
+                    "file_size": 28494
+                }
+            }
+        }
+    ]
+}
