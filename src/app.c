@@ -56,6 +56,7 @@ void proccess_new_message(tg_text_message *msg, const char *TG_TOKEN,
 bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
 
   tg_text_message msg;
+  msg.text = NULL;
   msg.offset=0;
 
   if (!get_new_text_message(TG_TOKEN, &msg)) {
@@ -67,6 +68,7 @@ bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
         exit(0);
       }
     }
+    free(msg.text);
     return false;
   }
 

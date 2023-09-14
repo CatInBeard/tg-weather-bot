@@ -85,7 +85,7 @@ bool send_simple_message_to_chat(const char *token, long chat_id,
                                                     // 70 - max token length
                                                     // max long length
 
-  char *link_buffer = malloc(alloc_size);
+  char *link_buffer = alloca(alloc_size);
 
   sprintf(link_buffer,
           "https://api.telegram.org/bot%s/sendMessage?chat_id=%ld/&text=%s",
