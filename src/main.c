@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
   } else {
     printf("Telegram token check skipped...\n");
   }
+  fflush(stdout);
 
   if (!OW_TOKEN) {
     fprintf(stderr, "OpenWeather token not set. Please fill OW_TOKEN "
@@ -111,6 +112,8 @@ int main(int argc, char *argv[]) {
   printf("Bot is started...\n");
 
   write_log("Bot is started");
+
+  fflush(stdout);
 
   app_run(TG_TOKEN, OW_TOKEN);
 
