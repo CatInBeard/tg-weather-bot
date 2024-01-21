@@ -25,15 +25,21 @@ ifneq ($(ITERLIMIT), 0)
 	PROFILER_FLAGS = -DITERATOR_LIMIT_COUNT=$(ITERLIMIT)
 endif
 
-all: build strip exec
+default: help
 
-strip:
+.PHONY: help
+help: # Show help for each of the Makefile recipes.
+	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
+.PHONY: all
+all: build strip exec # Prepare install-ready binary
+
+strip: # Delete all build information for decrease file size and imporve performance
 	strip $(bin_name)
 
-exec:
+exec: # Add executable permission
 	chmod +x $(bin_name)
 
-build: $(objects)
+build: $(objects) # Build binary
 	gcc $(objects) $(DEBUG_FLAGS) $(PROFILER_FLAGS) -o $(bin_name) $(include_dirs) $(link_libs) $(flags)
 	
 main.o:
@@ -54,7 +60,7 @@ logger.o:
 	gcc -c logger.c $(include_dirs) $(DEBUG_FLAGS)  $(PROFILER_FLAGS) $(flags)
 
 
-install:
+install: # Install binary to system
 	cp $(bin_name) /usr/bin/$(bin_name)
-clean:
+clean: # Delete all object files
 	rm *.o -f
