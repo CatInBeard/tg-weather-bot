@@ -17,9 +17,13 @@ char *default_greeting = "Welcome to Telegram weather bot! 🌦️\n\nSend me yo
 
 char *not_understand = "Sorry, i can't understand your query 😞";
 
+char *not_understand_sticker_id = "CAACAgIAAxkBAAELOetlrVGmz-4Kbnmy0-lFJY9KGHl2JAACjycAAulVBRiFTapo6EI3QDQE"; 
+
 char *get_greeting() { return default_greeting; }
 
 char *get_not_understand_message(){ return not_understand; }
+
+char *get_not_understand_sticker(){ return not_understand_sticker_id; }
 
 void cw_get_text_weather_type(weather_type wt, char *text) {
 

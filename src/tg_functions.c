@@ -79,7 +79,7 @@ bool send_simple_message_to_chat(const char *token, long chat_id,
   size_t token_length = strlen(token);
 
   size_t alloc_size = 145 + token_length +
-                      strlen(escaped_message_text); // 28 + 27 = 125
+                      strlen(escaped_message_text);
                                                     // 28 - base url
                                                     // 27 - get params
                                                     // 70 - max token length
@@ -90,7 +90,6 @@ bool send_simple_message_to_chat(const char *token, long chat_id,
   sprintf(link_buffer,
           "https://api.telegram.org/bot%s/sendMessage?chat_id=%ld/&text=%s",
           token, chat_id, escaped_message_text);
-
   curl_free(escaped_message_text);
 
   return simple_get(link_buffer);
@@ -133,9 +132,7 @@ bool parse_new_messages(mem_buff *mb, tg_text_message *message) {
   JSON_FIND_HELPER
   const char *message_text = json_object_get_string(message_text_obj);
 
-
   long chat_id = json_object_get_int(chat_id_obj);
-
 
   message->text = malloc(strlen(message_text));
   strcpy(message->text, message_text);
@@ -163,3 +160,24 @@ bool get_new_text_message(const char *TG_TOKEN, tg_text_message *msg) {
   return parsed;
 }
 
+bool send_sticker(const char *token, long chat_id, const char *sticker_id) {
+
+  // To get sticker id use getStickerSet API, for example
+  // https://api.telegram.org/botTOKEN/getStickerSet?name=shlya_2
+
+  size_t token_length = strlen(token);
+
+  size_t alloc_size = 150 + token_length + strlen(sticker_id);  // 28 - base url
+                                                                  // 30 - get params
+                                                                  // 70 - max token length
+                                                                  // max long length
+
+  char *link_buffer = alloca(alloc_size);
+
+  sprintf(link_buffer,
+          "https://api.telegram.org/bot%s/sendSticker?chat_id=%ld&sticker=%s",
+          token, chat_id, sticker_id);
+  printf("%s", link_buffer);
+
+  return simple_get(link_buffer);
+}

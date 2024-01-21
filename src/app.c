@@ -64,7 +64,8 @@ bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
       TG_OFFSET = msg.offset + 1;
       pid_t pid = fork();
       if (pid == 0) {
-        send_simple_message_to_chat(TG_TOKEN, msg.chat_id, get_not_understand_message()); // Subroutine
+        send_simple_message_to_chat(TG_TOKEN, msg.chat_id, get_not_understand_message());
+        send_sticker(TG_TOKEN, msg.chat_id, get_not_understand_sticker());
         exit(0);
       }
     }
