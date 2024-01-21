@@ -1,0 +1,17 @@
+name: Cppcheck static analysis
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  Static_analysis:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install cppcheck
+      run: sudo apt install cppcheck
+    - name: Run cppcheck
+      run: cppcheck ./src
