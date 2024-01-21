@@ -1,5 +1,5 @@
 # tg-weather-bot
-[![Build and publish Docker image](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-publish.yaml/badge.svg)](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-publish.yaml) [![Build](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-build.yaml/badge.svg)](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-build.yaml) [![Cppcheck static analysis](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/cpp-check.yaml/badge.svg)](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/cpp-check.yaml)   
+[![Build and publish Docker image](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-publish.yaml/badge.svg?event=release)](https://hub.docker.com/r/catinbeard/tg-weather-bot) [![Build](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-build.yaml/badge.svg)](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/docker-build.yaml) [![Cppcheck static analysis](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/cpp-check.yaml/badge.svg)](https://github.com/CatInBeard/tg-weather-bot/actions/workflows/cpp-check.yaml)   
 Simple tg weather bot written in C  
 
 ## Description
