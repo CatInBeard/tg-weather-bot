@@ -177,7 +177,29 @@ bool send_sticker(const char *token, long chat_id, const char *sticker_id) {
   sprintf(link_buffer,
           "https://api.telegram.org/bot%s/sendSticker?chat_id=%ld&sticker=%s",
           token, chat_id, sticker_id);
-  printf("%s", link_buffer);
+
+  return simple_get(link_buffer);
+}
+
+bool update_bot_commands(const char *token, const char *commands_json) {
+  // JSON format: [{"command":"start","description":"Start the bot"}]
+
+  size_t token_length = strlen(token);
+
+  char *escaped_json = escape_link(commands_json);
+
+  size_t alloc_size = 150 + token_length + strlen(escaped_json);  // 28 - base url
+                                                                  // 30 - get params
+                                                                  // 70 - max token length
+                                                                  // max long length
+
+  char *link_buffer = alloca(alloc_size);
+
+  sprintf(link_buffer,
+          "https://api.telegram.org/bot%s/setMyCommands?commands=%s",
+          token, escaped_json);
+
+  curl_free(escaped_json);
 
   return simple_get(link_buffer);
 }

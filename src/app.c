@@ -12,6 +12,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "headers/tg_functions.h"
 #include "logger.h"
 #include "mem_buff.h"
 #include "openweather_api.h"
@@ -21,7 +22,8 @@
 void proccess_new_message(tg_text_message *msg, const char *TG_TOKEN,
                           const char *OW_TOKEN) {
 
-  if (strlen(msg->text) >= 6) { // 6 - "/start" length
+  size_t message_length = strlen(msg->text);
+  if (message_length >= 6) { // 6 - "/start" length
 
     char buff[7];
     memcpy(buff, msg->text, 6);
@@ -33,6 +35,33 @@ void proccess_new_message(tg_text_message *msg, const char *TG_TOKEN,
       
       exit(0);
     }
+  } else if(message_length == 5){
+
+    char buff[6];
+    memcpy(buff, msg->text, 5);
+    buff[5] = '\0';
+
+    if (strcmp(buff, "/help") == 0) {
+
+      send_simple_message_to_chat(TG_TOKEN, msg->chat_id, get_help());
+      
+      exit(0);
+    }
+  } else if(message_length == 4){
+    char buff[5];
+    memcpy(buff, msg->text, 4);
+    buff[4] = '\0';
+
+    if (strcmp(buff, "/cat") == 0) {
+
+      send_sticker(TG_TOKEN, msg->chat_id, get_cat_sticker());
+      exit(0);
+    }
+  }
+
+  if(msg->text[0] == '/'){
+    send_simple_message_to_chat(TG_TOKEN, msg->chat_id, get_command_not_found());
+    exit(0);
   }
 
   city_weather cw;
@@ -92,7 +121,11 @@ bool answer_new_message(const char *TG_TOKEN, const char *OW_TOKEN) {
   return true;
 }
 
+static const char* commands_json = "[{\"command\":\"start\",\"description\":\"Start the bot\"},{\"command\":\"help\",\"description\":\"Help 🆘\"},{\"command\":\"cat\",\"description\":\"Get cat sticker 🐈\"}]";
+
 void app_run(const char *TG_TOKEN, const char *OW_TOKEN) {
+
+  update_bot_commands(TG_TOKEN, commands_json);
 
   // Required for profiling, need correct exit
   #ifdef ITERATOR_LIMIT_COUNT

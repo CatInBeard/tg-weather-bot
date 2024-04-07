@@ -12,18 +12,30 @@
 #include "city_weather.h"
 #include "weather_converter.h"
 
-char *default_greeting = "Welcome to Telegram weather bot! 🌦️\n\nSend me your "
+static const char *default_greeting = "Welcome to Telegram weather bot! 🌦️\n\nSend me your "
                          "City and I will tell you about the weather.";
 
-char *not_understand = "Sorry, i can't understand your query 😞";
+static const char *help = "Welcome to Telegram weather bot! 🌦️\n\nSend me your "
+                         "City and I will tell you about the weather. Or send /cat to get cat sticker 🐈";
 
-char *not_understand_sticker_id = "CAACAgIAAxkBAAELOetlrVGmz-4Kbnmy0-lFJY9KGHl2JAACjycAAulVBRiFTapo6EI3QDQE"; 
+static const char *not_understand = "Sorry, i can't understand your query 😞";
 
-char *get_greeting() { return default_greeting; }
+static const char *command_not_found = "Unknown command 🤔, try help 🆘";
 
-char *get_not_understand_message(){ return not_understand; }
+static const char *not_understand_sticker_id = "CAACAgIAAxkBAAELOetlrVGmz-4Kbnmy0-lFJY9KGHl2JAACjycAAulVBRiFTapo6EI3QDQE"; 
+static const char *cat_sticker_id = "CAACAgIAAxUAAWYTAYytFvpiiY9yyTYCQOOkn8JXAAIKSAACGbOYSPjrNq2CCu-mNAQ"; 
 
-char *get_not_understand_sticker(){ return not_understand_sticker_id; }
+const char *get_greeting() { return default_greeting; }
+
+const char *get_help() {return help;}
+
+const char *get_not_understand_message(){ return not_understand; }
+
+const char *get_not_understand_sticker(){ return not_understand_sticker_id; }
+
+const char *get_cat_sticker(){ return cat_sticker_id; }
+
+const char *get_command_not_found() {return command_not_found;}
 
 void cw_get_text_weather_type(weather_type wt, char *text) {
 
