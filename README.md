@@ -76,7 +76,9 @@ Alternatively, you can do without a container builder and work without a server 
 You can build the debug version and open it with gdb:  
 ```make debug```  
 If you are not using Docker and simply want to build the debug version, go to the src directory and run:  
-```make build DEBUG=1```
+```make build DEBUG=1 STRICT=0```
+
+```STRICT=0``` is needed to disable the -Werror flag, so that build errors are displayed but do not stop the build.
 
 ## Profiling
 You can build the debug version and run it with gprof:  

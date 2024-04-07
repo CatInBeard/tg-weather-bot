@@ -3,9 +3,9 @@ bin_name = weather-bot
 include_dirs = -Iheaders -Iheaders/structs
 link_libs = -lcurl -ljson-c
 objects = main.o tg_functions.o curl_functions.o app.o text.o openweather_api.o weather_converter.o logger.o
-flags = -Wall -Wextra
 
 DEBUG?=0
+STRICT?=1
 PROFILE?=0
 ITERLIMIT?=0
 
@@ -13,6 +13,12 @@ ifneq ($(DEBUG), 0)
 	DEBUG_FLAGS = -g
 else
 	DEBUG_FLAGS = 	
+endif
+
+ifneq ($(STRICT), 0)
+	flags = -Wall -Wextra -Werror
+else
+	flags = -Wall -Wextra
 endif
 
 ifneq ($(PROFILE), 0)
